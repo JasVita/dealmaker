@@ -25,9 +25,15 @@ const ContactsStep = ({ user }: ContactsStepProps) => {
 
     const fetchContacts = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-contacts/${userEmail}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contacts/${userEmail}`);
+        // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-contacts/${userEmail}`);
         const data = await response.json();
-        setContacts(data);
+        if (Array.isArray(data)) {
+          setContacts(data);
+        } else {
+          console.error("Invalid contacts data:", data);
+          setContacts([]);
+        }
       } catch (error) {
         console.error("❌ Error fetching contacts:", error);
       }
@@ -98,7 +104,10 @@ const ContactsStep = ({ user }: ContactsStepProps) => {
         </CardHeader>
         <CardContent>
           <div className="space-y-3 max-h-[250px] overflow-y-auto">
-            {(contacts || []).map((contact, index) => (
+            {/* {(contacts || []).map((contact, index) => ( */}
+            {(contacts || [])
+              .filter((contact) => contact && contact.phone)
+              .map((contact, index) => (
               <div key={index} className="flex items-center justify-between border-b pb-2">
                 <div className="flex items-center">
                   <input

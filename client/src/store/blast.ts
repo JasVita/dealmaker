@@ -261,9 +261,11 @@ export const useBlastStore = create<BlastState>()(
 
       addContactToDB: async (userEmail, name, phone, userEmail2) => {
         try {
-          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/add-contact/${userEmail}`, { name, phone });
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/contacts/add/${userEmail}`, { name, phone });
+          // const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/add-contact/${userEmail}`, { name, phone });
           console.log(response);
-          set((state) => ({ contacts: [...state.contacts, response.data.forntendContact] }));
+          // set((state) => ({ contacts: [...state.contacts, response.data.forntendContact] }));
+          set((state) => ({ contacts: [...state.contacts, response.data.contact] }));
           console.log(`✅ ${name || "Unnamed Contact"} (${phone}) has been added successfully!`);
           await get().logActivity(userEmail2, "contact added");
         } catch (error) {
@@ -273,7 +275,8 @@ export const useBlastStore = create<BlastState>()(
 
       deleteContactFromDB: async (agentPhone, phone, userEmail) => {
         try {
-          await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/delete-contact/${agentPhone}/${phone}`);
+          await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/contacts/delete/${agentPhone}/${phone}`);
+          // await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/delete-contact/${agentPhone}/${phone}`);
           set((state) => ({ contacts: state.contacts.filter((c) => c.phone !== phone) }));
           console.log(`🗑️ Contact (${phone}) has been deleted successfully!`);
           await get().logActivity(userEmail, "contact deleted");

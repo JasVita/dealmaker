@@ -18,7 +18,8 @@ exports.addContact = async (req, res) => {
     await contact.save();
     res.status(201).json({ success: true, contact });
   } catch (err) {
-    res.status(500).json({ error: "Failed to add contact" });
+    console.error("Server error on adding contact:", err); 
+    res.status(500).json({ error: "Failed to add contact", details: err.message });
   }
 };
 
