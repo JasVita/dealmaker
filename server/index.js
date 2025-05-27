@@ -458,7 +458,7 @@ app.post("/message-composer/generate", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5002;
 http
   .createServer(app)
   .listen(PORT, () => {
