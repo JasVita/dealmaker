@@ -39,8 +39,9 @@ exports.generateMessage = async (req, res) => {
       temperature: 0.7,
     });
 
-    res.json({ message: completion.choices[0].message.content });
+    const message = completion.choices[0].message.content; // ✅ fix: define message first
     console.log("📨 AI Generated message:", message);
+    res.json({ message });
   } catch (error) {
     console.error("❌ Error generating AI message:", error);
     res.status(500).send("Failed to generate message.");

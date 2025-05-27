@@ -135,7 +135,7 @@ export const useBlastStore = create<BlastState>()(
         }
 
         try {
-          await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/update-activity`, {
+          await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/activities/update`, {
             userEmail,
             action,
           });
@@ -228,7 +228,7 @@ export const useBlastStore = create<BlastState>()(
         set({ composeMessageStatus: "loading" });
 
         try {
-          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message-composer/generate`, {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/message-composer/generate`, {
             goal,
           });
 
